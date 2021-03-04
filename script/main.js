@@ -1,3 +1,7 @@
+import tabJoursEnOrdre from './Utilitaire/gestiontemps.js';
+// console.log("DEPUIS MAIN JS:" + tabJoursEnOrdre);
+
+
 const CLEFAPI = '83fbd9326754a80edf760cce023f586d';
 let resultatsAPI;
 
@@ -61,6 +65,28 @@ function AppelAPI(long, lat) {
             for (let j = 0; j < tempPourH.length; j++) {
                 tempPourH[j].innerText = `${Math.trunc(resultatsAPI.hourly[j * 3].temp)}°`
             }
+
+            //afficher trois premieres lettres des jours 
+
+            for (let k = 0; k < tabJoursEnOrdre.length; k++) {
+                joursDiv[k].innerText = tabJoursEnOrdre[k].slice(0, 3);
+            }
+
+            // Temps par jour
+            for (let m = 0; m < 7; m++) {
+                tempJoursDiv[m].innerText = `${Math.trunc(resultatsAPI.daily[m + 1].temp.day)}°`
+            }
+
+            // Icone dynamique 
+            if (heureActuelle >= 6 && heureActuelle < 21) {
+                imgIcone.src = `ressources/jour/${resultatsAPI.current.weather[0].icon}.svg`
+            } else {
+                imgIcone.src = `ressources/nuit/${resultatsAPI.current.weather[0].icon}.svg`
+            }
+
+
+            chargementContainer.classList.add('disparition');
+
 
         })
 
